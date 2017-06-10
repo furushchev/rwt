@@ -1,0 +1,24 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+
+body {
+    font-family: 'Noto Sans Japanese', serif;
+    max-width:640px;
+    margin: 0 auto;
+}
+
+
+#content{
+    width:100%;
+}
+
+#buttons{
+    margin-top:40px;
+}
+
+#text{
+    margin-top:40px;
+}
+
+.list-style-disc{
+    list-style-type: disc;
+}
