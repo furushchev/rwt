@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  var get_recognizer = function() {
+  var _sr = null;
+  var start_recognize = function() {
     var sr = new webkitSpeechRecognition();
     sr.continuous = true;
     sr.interimResults = false;
@@ -22,16 +23,14 @@ $(document).ready(function() {
       console.log("onsoundend");
       start_recognize();
     };
-    return sr;
+    sr.start();
+    _sr = sr;
   };
 
-  var _sr = null;
-
-  $("#start-button").click(function() {
-    _sr = get_recognizer();
-    _sr.start();
-  });
-  $("#stop-button").click(function() {
+  var stop_recognize = function() {
     if (_sr !== null) _sr.stop();
-  });
+  };
+
+  $("#start-button").click(start_recognize);
+  $("#stop-button").click(stop_recognize);
 });
