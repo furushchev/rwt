@@ -146,8 +146,7 @@ $(function() {
   sr.onChangeStatus = function(s) {
     var delim = "|";
     var txt = s.map(function(e) {
-      var detail = e.detail ? "|" + e.detail : "";
-      return "" + e.stamp + "|" + e.name + detail;
+      return "" + e.stamp + "|" + e.name + "|" + (e.detail || "");
     }).join('<br>');
 
     $("#status").html(txt);
