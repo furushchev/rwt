@@ -104,23 +104,14 @@ var SpeechRecognition = function(lang) {
   sr.onerror = function(e) {
     console.log("onerror: " + e.error);
     notifyStatusChange("onerror", e.error);
-    if (e.error !== "no-speech") {
-      sr.stop();
-      setTimeout(function() {
-        sr.start();
-      }, 200);
-    }
-  };
-
-  sr.onaudioend = function() {
-    console.log("onaudioend");
-    notifyStatusChange("onaudioend");
     sr.stop();
     setTimeout(function() {
       sr.start();
     }, 200);
   };
 
+  sr.onaudiostart = defaultHandler("onaudiostart");
+  sr.onaudioend = defaultHandler("onaudioend");
   sr.onnomatch = defaultHandler("onnomatch");
   sr.onspeechstart = defaultHandler("onspeechstart");
   sr.onspeechend = defaultHandler("onspeechend");
@@ -130,11 +121,20 @@ var SpeechRecognition = function(lang) {
 };
 
 SpeechRecognition.prototype.start = function() {
-  this.recog.start();
+  var that = this;
+  setTimeout(function() {
+    that.recog.start();
+  }, 200);
 };
 
 SpeechRecognition.prototype.stop = function() {
   this.recog.stop();
+};
+
+SpeechRecognition.prototype.change_lang = function(lang) {
+  this.stop();
+  this.recog.lang = lang;
+  this.start();
 };
 
 SpeechRecognition.prototype.get_status = function() {
@@ -146,7 +146,7 @@ SpeechRecognition.prototype.get_result = function() {
 };
 
 $(function() {
-  var sr = new SpeechRecognition();
+  var sr = new SpeechRecognition($("#language").val());
   sr.onChangeStatus = function(s) {
     var delim = "|";
     var txt = s.map(function(e) {
@@ -160,4 +160,5 @@ $(function() {
   };
   $("#start-button").click(function() {sr.start();});
   $("#stop-button").click(function() {sr.stop();});
+  $("#language").change(function() { sr.change_lang($("#language").val()); });
 });
