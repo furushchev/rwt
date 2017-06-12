@@ -93,6 +93,10 @@ var SpeechRecognition = function(lang) {
         if (that.onResult !== null) {
           that.onResult(res);
         }
+        sr.stop();
+        setTimeout(function() {
+          sr.start();
+        }, 200);
       }
     }
   };
