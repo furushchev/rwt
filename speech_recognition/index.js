@@ -49,7 +49,7 @@ var SpeechRecognition = function(lang) {
 
   var sr = new SR();
   sr.continuous = true;
-  sr.interimResults = false;
+  sr.interimResults = true;
   sr.lang = lang || 'ja-JP';
 
   this.result = new Queue();
